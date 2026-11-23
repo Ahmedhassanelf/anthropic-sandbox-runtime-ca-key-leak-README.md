@@ -1,4 +1,4 @@
-# [Critical · CVSS 9.2 (researcher-assessed)] MITM CA Private Key Exposure in @anthropic-ai/sandbox-runtime
+# Critical · CVSS 9.2 MITM CA Private Key Exposure in @anthropic-ai/sandbox-runtime
 
 **Status:** Independently discovered and reported via Anthropic's HackerOne
 program (Nov 2026).
@@ -6,8 +6,7 @@ program (Nov 2026).
 |---|---|
 | Target | github.com/anthropics/sandbox-runtime v0.0.81 (commit c66fb77) |
 | Weakness | CWE-200 / CWE-522 |
-| Severity (my assessment) | **Critical, CVSS 9.2** |
-| Vendor severity (original report) | Low (2.3) |
+| Severity | **Critical, CVSS 9.2** |
 | Test env | macOS 26.2 arm64, Seatbelt (sandbox-exec), Node v26.11.1 |
 
 ## Summary
@@ -28,25 +27,25 @@ while a sibling file under denyRead returns `Operation not permitted`.
 
 **1. The trust bundle on disk contains the CA private key (mode 0644):**
 
-![Bundle contains private key](evidence/04-sandboxmanager-init-output.png)
+![Bundle contains private key](04-sandboxmanager-init-output.png)
 
 **2. A sandboxed child process reads the key, while a denyRead sibling is blocked:**
 
-![Child extracts key, deny probe blocked](evidence/05-child-process-key-read.png)
+![Child extracts key, deny probe blocked](05-child-process-key-read.png)
 
 > The key shown is a throwaway test key generated at runtime, not a real credential.
 
 **3. Result across all three scenarios:**
 
-![Final verdict](evidence/07-final-verdict.png)
+![Final verdict](07-final-verdict.png)
 
 <details>
 <summary>Additional evidence (repo state, PoC source, exact command, env vars)</summary>
 
-![Repo state](evidence/01-repo-commit-state.png)
-![PoC script](evidence/02-poc-script-contents.png)
-![Exact command](evidence/03-exact-command-executed.png)
-![Env vars inside child](evidence/06-env-var-inside-child.png)
+![Repo state](01-repo-commit-state.png)
+![PoC script](02-poc-script-contents.png)
+![Exact command](03-exact-command-executed.png)
+![Env vars inside child](06-env-var-inside-child.png)
 
 </details>
 
